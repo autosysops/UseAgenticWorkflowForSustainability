@@ -54,7 +54,7 @@ mcp-scripts:
         required: true
         description: "Comma-separated Azure region IDs (e.g., 'westeurope,polandcentral,swedencentral'). Must be EU regions."
     run: |
-      pwsh -NoProfile -Command "& './scripts/Get-RegionEnergy.ps1' -Regions ($env:INPUT_REGIONS -split ',')"
+      pwsh -NoProfile -Command '& "./scripts/Get-RegionEnergy.ps1" -Regions ($env:INPUT_REGIONS -split ",")'
     env:
       ENTSOE_TOKEN: "${{ secrets.ENTSOE_TOKEN }}"
     timeout: 120
@@ -74,7 +74,7 @@ mcp-scripts:
         required: true
         description: "Destination Azure region ID (e.g., 'polandcentral')"
     run: |
-      pwsh -NoProfile -Command "& './scripts/Get-RegionLatency.ps1' -Source $env:INPUT_SOURCE -Destination $env:INPUT_DESTINATION -Online"
+      pwsh -NoProfile -Command '& "./scripts/Get-RegionLatency.ps1" -Source $env:INPUT_SOURCE -Destination $env:INPUT_DESTINATION -Online'
     timeout: 60
 
 # --------------------------------------------------------------------------
