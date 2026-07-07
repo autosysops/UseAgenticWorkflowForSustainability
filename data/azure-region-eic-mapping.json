@@ -1,0 +1,167 @@
+{
+  "description": "Mapping of EU Azure regions to ENTSO-E EIC bidding zone codes. Each region is mapped to the geographically nearest bidding zone based on the Haversine formula comparing Azure datacenter coordinates with bidding zone center coordinates.",
+  "source": "EIC codes from https://www.entsoe.eu/data/energy-identification-codes-eic/eic-area-codes-map/",
+  "scope": "EU regions only - this project is limited to EU datacenters",
+  "regions": [
+    {
+      "azureRegion": "westeurope",
+      "displayName": "West Europe (Netherlands)",
+      "latitude": 52.3667,
+      "longitude": 4.9,
+      "eicCode": "10YNL----------L",
+      "country": "Netherlands"
+    },
+    {
+      "azureRegion": "northeurope",
+      "displayName": "North Europe (Ireland)",
+      "latitude": 53.3478,
+      "longitude": -6.2597,
+      "eicCode": "10Y1001A1001A59C",
+      "country": "Ireland"
+    },
+    {
+      "azureRegion": "francecentral",
+      "displayName": "France Central (Paris)",
+      "latitude": 46.3772,
+      "longitude": 2.373,
+      "eicCode": "10YFR-RTE------C",
+      "country": "France"
+    },
+    {
+      "azureRegion": "francesouth",
+      "displayName": "France South (Marseille)",
+      "latitude": 43.8345,
+      "longitude": 2.1972,
+      "eicCode": "10YFR-RTE------C",
+      "country": "France"
+    },
+    {
+      "azureRegion": "germanywestcentral",
+      "displayName": "Germany West Central (Frankfurt)",
+      "latitude": 50.1109,
+      "longitude": 8.6821,
+      "eicCode": "10Y1001A1001A82H",
+      "country": "Germany"
+    },
+    {
+      "azureRegion": "germanynorth",
+      "displayName": "Germany North (Berlin)",
+      "latitude": 53.073635,
+      "longitude": 8.806422,
+      "eicCode": "10Y1001A1001A82H",
+      "country": "Germany"
+    },
+    {
+      "azureRegion": "uksouth",
+      "displayName": "UK South (London)",
+      "latitude": 50.941,
+      "longitude": -0.799,
+      "eicCode": "10YGB----------A",
+      "country": "United Kingdom"
+    },
+    {
+      "azureRegion": "ukwest",
+      "displayName": "UK West (Cardiff)",
+      "latitude": 51.481,
+      "longitude": -3.18,
+      "eicCode": "10YGB----------A",
+      "country": "United Kingdom"
+    },
+    {
+      "azureRegion": "swedencentral",
+      "displayName": "Sweden Central (Gävle)",
+      "latitude": 60.6749,
+      "longitude": 17.1413,
+      "eicCode": "10Y1001A1001A46L",
+      "country": "Sweden"
+    },
+    {
+      "azureRegion": "swedensouth",
+      "displayName": "Sweden South (Staffanstorp)",
+      "latitude": 55.6059,
+      "longitude": 13.1931,
+      "eicCode": "10Y1001A1001A47J",
+      "country": "Sweden"
+    },
+    {
+      "azureRegion": "norwayeast",
+      "displayName": "Norway East (Oslo)",
+      "latitude": 59.913868,
+      "longitude": 10.752245,
+      "eicCode": "10YNO-1--------2",
+      "country": "Norway"
+    },
+    {
+      "azureRegion": "norwaywest",
+      "displayName": "Norway West (Stavanger)",
+      "latitude": 58.969975,
+      "longitude": 5.733107,
+      "eicCode": "10YNO-2--------T",
+      "country": "Norway"
+    },
+    {
+      "azureRegion": "switzerlandnorth",
+      "displayName": "Switzerland North (Zürich)",
+      "latitude": 47.451542,
+      "longitude": 8.564572,
+      "eicCode": "10YCH-SWISSGRIDZ",
+      "country": "Switzerland"
+    },
+    {
+      "azureRegion": "switzerlandwest",
+      "displayName": "Switzerland West (Geneva)",
+      "latitude": 46.204391,
+      "longitude": 6.143158,
+      "eicCode": "10YCH-SWISSGRIDZ",
+      "country": "Switzerland"
+    },
+    {
+      "azureRegion": "polandcentral",
+      "displayName": "Poland Central (Warsaw)",
+      "latitude": 52.237049,
+      "longitude": 21.017532,
+      "eicCode": "10YPL-AREA-----S",
+      "country": "Poland"
+    },
+    {
+      "azureRegion": "italynorth",
+      "displayName": "Italy North (Milan)",
+      "latitude": 45.4654,
+      "longitude": 9.1859,
+      "eicCode": "10Y1001A1001A73I",
+      "country": "Italy"
+    },
+    {
+      "azureRegion": "spaincentral",
+      "displayName": "Spain Central (Madrid)",
+      "latitude": 40.4168,
+      "longitude": -3.7038,
+      "eicCode": "10YES-REE------0",
+      "country": "Spain"
+    },
+    {
+      "azureRegion": "finlandcentral",
+      "displayName": "Finland Central (Helsinki area)",
+      "latitude": 60.1699,
+      "longitude": 24.9384,
+      "eicCode": "10YFI-1--------U",
+      "country": "Finland"
+    },
+    {
+      "azureRegion": "austriaeast",
+      "displayName": "Austria East (Vienna)",
+      "latitude": 48.2082,
+      "longitude": 16.3738,
+      "eicCode": "10YAT-APG------L",
+      "country": "Austria"
+    },
+    {
+      "azureRegion": "belgiumcentral",
+      "displayName": "Belgium Central (Brussels area)",
+      "latitude": 50.8503,
+      "longitude": 4.3517,
+      "eicCode": "10YBE----------2",
+      "country": "Belgium"
+    }
+  ]
+}

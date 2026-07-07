@@ -1,0 +1,11 @@
+# Environment variables (contains secrets - NEVER commit)
+.env
+.env.local
+.env.*.local
+
+# PowerShell module cache
+modules/
+
+# Test output
+TestResults/
+*.log
