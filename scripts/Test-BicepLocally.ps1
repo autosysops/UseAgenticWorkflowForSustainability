@@ -71,18 +71,23 @@ Write-Host ""
 
 Write-Host "[1/4] Parsing Bicep file for Azure regions..." -ForegroundColor Yellow
 
-$bicepContent = Get-Content $BicepFilePath -Raw
+# Read the Bicep file line by line so we can skip comment lines
+$bicepLines = Get-Content $BicepFilePath
 
 # Load the mapping file to get the list of known EU region IDs
 $mappingFilePath = Join-Path (Split-Path $scriptRoot -Parent) "data\azure-region-eic-mapping.json"
 $mappingData = Get-Content $mappingFilePath -Raw | ConvertFrom-Json
 $knownRegions = $mappingData.regions | ForEach-Object { $_.azureRegion }
 
-# Find all single-quoted string literals in the Bicep file that match known region IDs
+# Find region string literals in non-comment lines only
+# This avoids false positives from recommendation comments like "// use swedencentral"
 $foundRegions = @()
+$codeLines = $bicepLines | Where-Object { $_ -notmatch '^\s*//' }  # Skip full-line comments
+$codeContent = $codeLines -join "`n"
+
 foreach ($region in $knownRegions) {
     # Match the region as a string literal (e.g., 'westeurope' or "westeurope")
-    if ($bicepContent -match "['`"]$region['`"]") {
+    if ($codeContent -match "['`"]$region['`"]") {
         $foundRegions += $region
     }
 }

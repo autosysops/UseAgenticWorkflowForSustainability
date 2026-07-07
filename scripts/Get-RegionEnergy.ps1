@@ -51,21 +51,38 @@ Param(
 
 # If no token was provided as parameter, try environment variable
 if (-not $EntsoeToken) {
-    # Attempt to load .env file if it exists (for local development)
-    $envFile = Join-Path (Split-Path $PSScriptRoot -Parent) ".env"
-    if (Test-Path $envFile) {
-        Get-Content $envFile | ForEach-Object {
-            if ($_ -match "^\s*([^#][^=]+)=(.+)$") {
-                [System.Environment]::SetEnvironmentVariable($matches[1].Trim(), $matches[2].Trim(), "Process")
+    # First check if it's already set in the environment
+    $EntsoeToken = $env:ENTSOE_TOKEN
+
+    # If not in environment, attempt to load from .env file (for local development)
+    # Supports both .env and .env.local naming conventions
+    if (-not $EntsoeToken) {
+        $repoRoot = Split-Path $PSScriptRoot -Parent
+        $envFiles = @(
+            (Join-Path $repoRoot ".env"),
+            (Join-Path $repoRoot ".env.local")
+        )
+
+        foreach ($envFile in $envFiles) {
+            if (Test-Path $envFile) {
+                Write-Verbose "Loading environment from: $envFile"
+                Get-Content $envFile | ForEach-Object {
+                    if ($_ -match "^\s*([^#][^=]+)=(.+)$") {
+                        $varName = $matches[1].Trim()
+                        $varValue = $matches[2].Trim().Trim('"').Trim("'")
+                        [System.Environment]::SetEnvironmentVariable($varName, $varValue, "Process")
+                    }
+                }
+                break  # Use first .env file found
             }
         }
+        $EntsoeToken = $env:ENTSOE_TOKEN
     }
-    $EntsoeToken = $env:ENTSOE_TOKEN
 }
 
 # Validate we have a token
 if (-not $EntsoeToken) {
-    Write-Error "No ENTSO-E token provided. Set ENTSOE_TOKEN in .env or pass -EntsoeToken parameter."
+    Write-Error "No ENTSO-E token provided. Set ENTSOE_TOKEN in .env / .env.local or pass -EntsoeToken parameter."
     exit 1
 }
 
@@ -131,17 +148,13 @@ foreach ($region in $Regions) {
 
     $eicCode = $regionMapping.eicCode
 
-    # Calculate time period: today from midnight to now (or last full hour)
+    # Calculate time period: use YESTERDAY's full day (00:00 to 24:00 UTC)
+    # ENTSO-E "realised" generation data (processType A16) is published with a delay
+    # of several hours, so today's data may not be available yet. Yesterday is always safe.
     # ENTSO-E expects format: yyyyMMddHHmm
-    $startInterval = (Get-Date).Date.ToUniversalTime().ToString("yyyyMMddHHmm")
-    $stopInterval = (Get-Date).ToUniversalTime().AddHours(-1).ToString("yyyyMMdd") + `
-                    (Get-Date).ToUniversalTime().AddHours(-1).ToString("HH") + "00"
-
-    # If start equals stop (e.g., at midnight), use yesterday
-    if ($startInterval -eq $stopInterval) {
-        $startInterval = (Get-Date).Date.AddDays(-1).ToUniversalTime().ToString("yyyyMMddHHmm")
-        $stopInterval = (Get-Date).Date.ToUniversalTime().ToString("yyyyMMddHHmm")
-    }
+    $yesterday = (Get-Date).AddDays(-1).Date.ToUniversalTime()
+    $startInterval = $yesterday.ToString("yyyyMMddHHmm")
+    $stopInterval = $yesterday.AddDays(1).ToString("yyyyMMddHHmm")
 
     # Build the ENTSO-E API URL for Actual Generation per Production Type
     # documentType=A75: Actual generation per type
